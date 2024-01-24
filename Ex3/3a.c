@@ -19,7 +19,10 @@ int main(){
     printf("Enter option(even=0/odd=1)= ");
     scanf("%d",&opt);
     
-    printf("\n%s\n%s\n%s\n",msg[0],msg[1],msg[2]);
+    //printf("\n%s\n%s\n%s\n",msg[0],msg[1],msg[2]);
+    for(int i=0; i<n; i++){
+        printf("%s\n",msg[i]);
+    }
     
     for(int i=0; i<n; i++){
         int r_count = 0;
@@ -38,6 +41,7 @@ int main(){
             strcat(msg[i],"1");
         }
     }
-    printf("\n%s\n%s\n%s\n",msg[0],msg[1],msg[2]);
-    
+    for(int i=0; i<n; i++){
+        printf("%s\n",msg[i]);
+    }
 }
