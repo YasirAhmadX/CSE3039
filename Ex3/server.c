@@ -27,7 +27,7 @@ int main()
     while(1)
     {
         bzero( str, 100);
-        read(listen_fd,str,100);
+        read(comm_fd,str,100);
         printf("Echoing back - %s",str);
         write(comm_fd, str, strlen(str)+1);
     }
