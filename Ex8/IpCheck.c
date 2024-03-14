@@ -11,7 +11,7 @@ char LA[4][9] = {"11111111\0","11111111\0","11111111\0","11111111\0"};
 int ip_c = 0;
 int i_ip_c = 0;
 
-void calcFALA(int maskNum){
+void calcCIDR(int maskNum){
     int c = 0;
     int b = 0;
     for(int i=0;i<maskNum;i++){
@@ -19,11 +19,12 @@ void calcFALA(int maskNum){
             b = 0;
             c++;
         }
-        FA[c][b]=ip[c][b];
-        LA[c][b]=ip[c][b];
+        mask[c][b] = '1';
+        FA[c][b] = ip[c][b];
+        LA[c][b] = ip[c][b];
         b++;
     }
-    
+    printf("Subnet(Binary) = %s.%s.%s.%s\n",mask[0],mask[1],mask[2],mask[3]);
     printf("FA(Binary) = %s.%s.%s.%s\n",FA[0],FA[1],FA[2],FA[3]);
     printf("LA(Binary) = %s.%s.%s.%s\n\n",LA[0],LA[1],LA[2],LA[3]);
     
@@ -32,20 +33,7 @@ void calcFALA(int maskNum){
     printf("FA = %d.%d.%d.%d\n",binaryToDecimal(FA[0]),binaryToDecimal(FA[1]),binaryToDecimal(FA[2]),binaryToDecimal(FA[3]));
     printf("LA = %d.%d.%d.%d\n",binaryToDecimal(LA[0]),binaryToDecimal(LA[1]),binaryToDecimal(LA[2]),binaryToDecimal(LA[3]));
 }
-void calcMask(int maskNum){
-    int mask_c = 0;
-    int mask_b = 0;
-    for(int i=0;i<maskNum;i++){
-        if(mask_b==8){
-            mask_b = 0;
-            mask_c++;
-        }
-        mask[mask_c][mask_b]='1';
-        mask_b++;
-    }
-    
-    printf("Subnet(Binary) = %s.%s.%s.%s\n",mask[0],mask[1],mask[2],mask[3]);
-}
+
 void decimalToBinary(int decimalNum) {
     int binaryNum[8];
     int i = 0;
@@ -122,22 +110,19 @@ int main()
                 Class='A';
                 printf("Class %c\n",Class);
                 printf("ip=%d.%d.%d.%d/%d\n",i_ip[0],i_ip[1],i_ip[2],i_ip[3],8);
-                calcMask(8);
-                calcFALA(8);
+                calcCIDR(8);
             }
             else if(i_ip[0]<=191){
                 Class='B';
                 printf("Class %c\n",Class);
                 printf("ip=%d.%d.%d.%d/%d\n",i_ip[0],i_ip[1],i_ip[2],i_ip[3],16);
-                calcMask(16);
-                calcFALA(16);
+                calcCIDR(16);
             }
             else if(i_ip[0]<=223){
                 Class='C';
                 printf("Class %c\n",Class);
                 printf("ip=%d.%d.%d.%d/%d\n",i_ip[0],i_ip[1],i_ip[2],i_ip[3],24);
-                calcMask(24);
-                calcFALA(24);
+                calcCIDR(24);
             }
             else if(i_ip[0]<=239){
                 Class='D';
@@ -153,12 +138,9 @@ int main()
             int maskNum;
             printf("Enter mask number: ");
             scanf("%d",&maskNum);
-        
-            calcMask(maskNum);
-            
             //First and Last address(and opt)(simply copy maskNum bits from IP and add zero)
             
-            calcFALA(maskNum);
+            calcCIDR(maskNum);
             
         
         case 3 : exit(0);
