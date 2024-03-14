@@ -10,6 +10,7 @@ char FA[4][9] = {"00000000\0","00000000\0","00000000\0","00000000\0"};
 char LA[4][9] = {"11111111\0","11111111\0","11111111\0","11111111\0"};
 int ip_c = 0;
 int i_ip_c = 0;
+int maskNum;
 
 void calcCIDR(int maskNum){
     int c = 0;
@@ -32,6 +33,8 @@ void calcCIDR(int maskNum){
     printf("Mask = %d.%d.%d.%d\n",binaryToDecimal(mask[0]),binaryToDecimal(mask[1]),binaryToDecimal(mask[2]),binaryToDecimal(mask[3]));
     printf("FA = %d.%d.%d.%d\n",binaryToDecimal(FA[0]),binaryToDecimal(FA[1]),binaryToDecimal(FA[2]),binaryToDecimal(FA[3]));
     printf("LA = %d.%d.%d.%d\n",binaryToDecimal(LA[0]),binaryToDecimal(LA[1]),binaryToDecimal(LA[2]),binaryToDecimal(LA[3]));
+    
+    printf("Number of Hosts: %ld",(long)pow(2,(32-maskNum)));
 }
 
 void decimalToBinary(int decimalNum) {
@@ -62,6 +65,7 @@ void decimalToBinary(int decimalNum) {
     }
     ip_c++;
 }
+
 int binaryToDecimal(char *binary) {
     int decimal = 0;
     int length = strlen(binary);
@@ -110,19 +114,22 @@ int main()
                 Class='A';
                 printf("Class %c\n",Class);
                 printf("ip=%d.%d.%d.%d/%d\n",i_ip[0],i_ip[1],i_ip[2],i_ip[3],8);
-                calcCIDR(8);
+                maskNum = 8;
+                calcCIDR(maskNum);
             }
             else if(i_ip[0]<=191){
                 Class='B';
                 printf("Class %c\n",Class);
                 printf("ip=%d.%d.%d.%d/%d\n",i_ip[0],i_ip[1],i_ip[2],i_ip[3],16);
-                calcCIDR(16);
+                maskNum = 16;
+                calcCIDR(maskNum);
             }
             else if(i_ip[0]<=223){
                 Class='C';
                 printf("Class %c\n",Class);
                 printf("ip=%d.%d.%d.%d/%d\n",i_ip[0],i_ip[1],i_ip[2],i_ip[3],24);
-                calcCIDR(24);
+                maskNum = 24;
+                calcCIDR(maskNum);
             }
             else if(i_ip[0]<=239){
                 Class='D';
@@ -135,7 +142,6 @@ int main()
             break;
         
         case 2 : 
-            int maskNum;
             printf("Enter mask number: ");
             scanf("%d",&maskNum);
             //First and Last address(and opt)(simply copy maskNum bits from IP and add zero)
